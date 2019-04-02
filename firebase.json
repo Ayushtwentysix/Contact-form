@@ -5,6 +5,10 @@
       {
         "source": "/",
         "function": "app" 
+      },
+      {
+        "source": "/contact",
+        "function": "app2"
       }],
     "ignore": [
       "firebase.json",
