@@ -20,3 +20,7 @@ const app2 = express();
 app2.engine('hbs', engines.handlebars);
 app2.set('views','./views');
 app2.set('view engine', 'hbs');
+
+app2.post("/contact",(req,res) => {
+
+});
