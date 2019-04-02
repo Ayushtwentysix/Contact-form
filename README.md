@@ -1,0 +1,1 @@
+A basic HTML form hosted on firebase. The firebase functions is used to trigger the email sending process. 
