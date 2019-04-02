@@ -15,3 +15,8 @@ app.get("/",(req,res) => {
 });
 
 exports.app = functions.https.onRequest(app);
+
+const app2 = express();
+app2.engine('hbs', engines.handlebars);
+app2.set('views','./views');
+app2.set('view engine', 'hbs');
