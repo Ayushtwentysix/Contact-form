@@ -13,3 +13,5 @@ app.set('view engine', 'hbs');
 app.get("/",(req,res) => {
     res.render("main.hbs");
 });
+
+exports.app = functions.https.onRequest(app);
