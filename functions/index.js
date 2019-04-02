@@ -49,3 +49,5 @@ html: req.body.message
           res.redirect('/');
 });
 });
+
+exports.app2 = functions.https.onRequest(app2);
