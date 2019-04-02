@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contact Form</title>
+    <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+<body>
+
+
+<h1>Contact Form</h1>
+
+<form method="POST" action="/contact">
+  <label>Enter your mail ID:</label>
+<input type="email" required name="email_sender" />  
+  <label>Enter receiver mail ID:</label>
+<input type="email" required name="email_receiver" />  
+  <label>Subject</label>
+<input type="text" required name="subject" />  
+  <label>Enter Message:</label>
+<input type="text" required name="message" /> 
+    <button type="submit">Submit</button>
+</form>
+
+
+</body>
+</html>
