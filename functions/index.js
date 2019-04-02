@@ -23,4 +23,29 @@ app2.set('view engine', 'hbs');
 
 app2.post("/contact",(req,res) => {
 
+    const transporter = nodemailer.createTransport({
+ service: 'gmail',
+ secure: true,
+ auth: {
+       user: process.env.EMAIL,
+        pass: process.env.PASSWORD 
+    }
+});
+ 
+       const mailOptions = {
+  from: req.body.email_sender, // sender address
+  to: req.body.email_receiver, // list of receivers
+  subject: req.body.subject, // Subject line
+html: req.body.message
+};
+
+      transporter.sendMail(mailOptions, function (err, info) {
+        if(err){
+         console.log(err);
+         res.redirect('/');
+        }
+         else
+          console.log(info);
+          res.redirect('/');
+});
 });
