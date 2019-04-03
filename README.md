@@ -1,1 +1,3 @@
-A basic HTML form hosted on firebase. The firebase functions is used to trigger the email sending process. 
+# Firebase SDK for Cloud Functions - HTTPS function with Email Trigger
+
+This quickstart demonstrates using the **Firebase SDK for Cloud Functions** with an HTTPS trigger *for sending the emails*. 
