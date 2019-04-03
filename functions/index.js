@@ -3,7 +3,7 @@ const express = require('express');
 const engines = require('consolidate');
 const nodemailer = require('nodemailer');
 const handlebars = require("handlebars");
-
+var validator = require('validator');
 
 const app = express();
 app.engine('hbs', engines.handlebars);
@@ -23,7 +23,8 @@ app2.set('view engine', 'hbs');
 
 app2.post("/contact",(req,res) => {
 
-    const transporter = nodemailer.createTransport({
+if(validator.isEmail(req.body.email_sender) && validator.isEmail(req.body.email_receiver)){
+     const transporter = nodemailer.createTransport({
  service: 'gmail',
  secure: true,
  auth: {
@@ -31,6 +32,7 @@ app2.post("/contact",(req,res) => {
         pass: process.env.PASSWORD 
     }
 });
+ 
  
        const mailOptions = {
   from: req.body.email_sender, // sender address
@@ -47,7 +49,15 @@ html: req.body.message
          else
           console.log(info);
           res.redirect('/');
-});
+});   
+    
+}
+else {
+    const err = "Email input is not valid";
+    res.render("main.hbs", {err: err});
+}
+
+
 });
 
 exports.app2 = functions.https.onRequest(app2);
