@@ -32,7 +32,12 @@ if(validator.isEmail(req.body.email_sender) && validator.isEmail(req.body.email_
         pass: process.env.PASSWORD 
     }
 });
-     const mailOptions = {
+
+   
+
+ 
+ 
+       const mailOptions = {
   from: req.body.email_sender, // sender address
   to: req.body.email_receiver, // list of receivers
   subject: req.body.subject, // Subject line
@@ -48,6 +53,7 @@ html: req.body.message
           console.log(info);
           res.redirect('/');
 });   
+
 }
 else {
     const err = "Email input is not valid";
