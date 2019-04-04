@@ -2,6 +2,10 @@
 
 This quickstart demonstrates the functioning of **Firebase SDK for Cloud Functions** with an HTTPS trigger *for sending the emails*.
 
+# Table of contents
+1. [Introduction](/#Introduction)
+2. [Configuration](/#Configuration)
+
 # Introduction 
 We'll use the function that send emails using **[Nodemailer](https://www.npmjs.com/package/nodemailer)** dependency (a node based Email client with comprehensive EMail server setup). There are four input boxes:
 - Sender email address **(required)**
@@ -40,3 +44,6 @@ $ npm i --save express consolidate handlebars nodemailer validator
 # Functions Code
 See file ```functions/index.js``` for the Functions trigger and the email sending code.
 Sending emails is performed using nodemailer. For simplicity, in this sample we're showing how to send email through SMTP using a Gmail account.
+
+The dependencies are listed in ```functions/package.json```.
+
