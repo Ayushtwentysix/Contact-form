@@ -5,8 +5,8 @@ This quickstart demonstrates the functioning of **Firebase SDK for Cloud Functio
 # Table of contents
 1. [Introduction](#Introduction)
 2. [Configuration](#Configuration)
-3. [Functions-Code](#Functions-Code)
-4. [Usage instructions](#Usageinstructions)
+3. [Functions Code](#Functions-Code)
+4. [Usage instructions](#Usage-instructions)
 
 # Introduction 
 We'll use the function that send emails using **[Nodemailer](https://www.npmjs.com/package/nodemailer)** dependency (a node based Email client with comprehensive EMail server setup). There are four input boxes:
@@ -43,7 +43,7 @@ $ npm i --save express consolidate handlebars nodemailer validator
 
 **Watch the official video: [Node.js apps on Firebase Hosting Crash Course](https://youtu.be/LOeioOKUKI8)**
 
-# Functions-Code
+# Functions Code
 See file ```functions/index.js``` for the Functions trigger and the email sending code.
 Sending emails is performed using nodemailer. For simplicity, in this sample we're showing how to send email through SMTP using a Gmail account.
 
