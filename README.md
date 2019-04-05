@@ -76,12 +76,12 @@ The dependencies are listed in ```functions/package.json```. Please make sure th
 Add below dependencies in ```functions/index.js``` file. 
 
 ```javascript
-const functions = require('firebase-functions');
-const express = require('express');
-const engines = require('consolidate');
-const nodemailer = require('nodema iler');
-const handlebars = require("handlebars");
-const validator = require('validator');
+var functions = require('firebase-functions');
+var express = require('express');
+var engines = require('consolidate');
+var nodemailer = require('nodema iler');
+var handlebars = require("handlebars");
+var validator = require('validator');
 ```
 ## First Firebase Function
 
@@ -199,6 +199,17 @@ Error rendering will be done in ```main.hbs``` file present in ```functions/view
 ```
 
 ## Deploy and Test
+
+To be able to send emails with your Gmail account: **enable access to [Less Secure Apps](https://myaccount.google.com/lesssecureapps)**.
+Set the ```EMAIL``` and ```PASSWORD``` Google Cloud environment variables to match the email and password of the Gmail account used to send emails. To set the variables follow these steps:
+1. Go to firebase console & select the project where you deployed the code.
+2. Then click on functions link present in sidebar.
+3. In the dashboard tab, hover on ```app2``` function. On right hand side, click on **three vertical dots** and then on **Detailed usage stats** link. This will open the ```app2``` function in Google Cloud Platform (GCP).
+![firebase dashboard](https://res.cloudinary.com/dzdj5vlz4/image/upload/v1554479053/dashboard_firebase.png)
+4. Click on **edit** in GCP dashboard.
+ ![GCP dashboard](https://res.cloudinary.com/dzdj5vlz4/image/upload/v1554479409/GCP_console.png)
+5. Click on **more** option and head over to Environment variables section. Now replace the *values* of **EMAIL** & **PASSWORD** box with the email and password of the Gmail account used to send emails.
+![environment variables](https://res.cloudinary.com/dzdj5vlz4/image/upload/v1554479959/environment_variables.png) 
 
 Now we will deploy both functions to firebase. Run command:
 ```sh
