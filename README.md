@@ -12,6 +12,7 @@ This quickstart demonstrates the functioning of **Firebase SDK for Cloud Functio
      * [Second Firebase Function](#Second-Firebase-Function)
      * [HTML Contact Form](#HTML-Contact-Form)
      * [Show Error](#Show-Error)
+     * [Deploy and Test](#Deploy-and-Test)
 
 # Introduction 
 We'll use the function that send emails using **[Nodemailer](https://www.npmjs.com/package/nodemailer)** dependency (a node based Email client with comprehensive EMail server setup). There are four input boxes:
@@ -87,7 +88,7 @@ var validator = require('validator');
 2. Choose engine as hbs.
 3. Set ```functions/views``` folder as views.
 4. Set hbs as engine.
-5. Create a GET route and render ```main.hbs``` file present in ```functions/views``` folder
+5. Create a GET method and render ```main.hbs``` file present in ```functions/views``` folder
 6. Trigger the function ```app``` with an HTTP request.
 
 ```javascript
@@ -111,14 +112,13 @@ Since this code is bit large, we will break it into chunks.
 3. Set ```functions/views``` folder as views.
 4. Set hbs as engine.
 
-*see the below code.*
 ```javascript
 const app2 = express();
 app2.engine('hbs', engines.handlebars);
 app2.set('views','./views');
 app2.set('view engine', 'hbs');
 ```
-5. Create a POST route.
+5. Create a POST Method.
 ```javascript
 app2.post("/contact",(req,res) => {
         //We WILL WRITE CODE HERE
@@ -189,13 +189,21 @@ Then *Submit Button* will submit the data to ```/contact```.
 ```
 
 # Show Error
-Error rendering will be done in ```main.hbs``` file present in ```functions/views``` folder. We will place our code below the HTML form. The ```err``` will be passed in webpage when we will render ```main.hbs``` in ```index.js``` file. We use **double curly braces** to render ```err``` in webpage **only** under the ```if``` condition.
+Error rendering will be done in ```main.hbs``` file present in ```functions/views``` folder. **We will place our code below the HTML form**. The ```err``` will be passed in webpage when we will render ```main.hbs``` in ```index.js``` file. We use **double curly braces** to render ```err``` in webpage **only** under the ```if``` condition.
 
 ```handlebars
 {{# if err }}
 <h3>{{err}}</h3>
 {{/if}}
 ```
+
+# Deploy and Test
+
+Now we will deploy both functions to firebase. Run command:
+```sh
+$ firebase deploy
+```
+This will create two functions which can be seen in firebase console. At the end you will get a link of webpage (hosted on firebase). Open that page and enter the email address of sender, email address of sender, Subject & Message. Then press Submit. 
 
 
 

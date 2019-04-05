@@ -3,7 +3,7 @@ const express = require('express');
 const engines = require('consolidate');
 const nodemailer = require('nodemailer');
 const handlebars = require("handlebars");
-var validator = require('validator');
+const validator = require('validator');
 
 const app = express();
 app.engine('hbs', engines.handlebars);
