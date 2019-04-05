@@ -1,11 +1,11 @@
-const functions = require('firebase-functions');
-const express = require('express');
-const engines = require('consolidate');
-const nodemailer = require('nodemailer');
-const handlebars = require("handlebars");
-const validator = require('validator');
+var functions = require('firebase-functions');
+var express = require('express');
+var engines = require('consolidate');
+var nodemailer = require('nodemailer');
+var handlebars = require("handlebars");
+var validator = require('validator');
 
-const app = express();
+var app = express();
 app.engine('hbs', engines.handlebars);
 app.set('views','./views');
 app.set('view engine', 'hbs');
@@ -16,7 +16,7 @@ app.get("/",(req,res) => {
 
 exports.app = functions.https.onRequest(app);
 
-const app2 = express();
+var app2 = express();
 app2.engine('hbs', engines.handlebars);
 app2.set('views','./views');
 app2.set('view engine', 'hbs');
@@ -24,7 +24,7 @@ app2.set('view engine', 'hbs');
 app2.post("/contact",(req,res) => {
 
 if(validator.isEmail(req.body.email_sender) && validator.isEmail(req.body.email_receiver)){
-     const transporter = nodemailer.createTransport({
+     var transporter = nodemailer.createTransport({
  service: 'gmail',
  secure: true,
  auth: {
@@ -37,7 +37,7 @@ if(validator.isEmail(req.body.email_sender) && validator.isEmail(req.body.email_
 
  
  
-       const mailOptions = {
+       var mailOptions = {
   from: req.body.email_sender, // sender address
   to: req.body.email_receiver, // list of receivers
   subject: req.body.subject, // Subject line
@@ -56,7 +56,7 @@ html: req.body.message
 
 }
 else {
-    const err = "Email input is not valid";
+    var err = "Email input is not valid";
     res.render("main.hbs", {err: err});
 }
 
