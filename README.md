@@ -7,9 +7,11 @@ This quickstart demonstrates the functioning of **Firebase SDK for Cloud Functio
 2. [Configuration](#Configuration)
 3. [Functions Code](#Functions-Code)
 4. [Usage instructions](#Usage-instructions)
-     * [Writing Dependencies](#Writing-Dependencies)
+     * [Dependencies](#Dependencies)
      * [First Firebase Function](#First-Firebase-Function)
      * [Second Firebase Function](#Second-Firebase-Function)
+     * [HTML Contact Form](#HTML-Contact-Form)
+     * [Show Error](#Show-Error)
 
 # Introduction 
 We'll use the function that send emails using **[Nodemailer](https://www.npmjs.com/package/nodemailer)** dependency (a node based Email client with comprehensive EMail server setup). There are four input boxes:
@@ -69,11 +71,13 @@ The dependencies are listed in ```functions/package.json```. Please make sure th
  
 # Writing Dependencies
 
+Add below dependencies in ```functions/index.js``` file. 
+
 ```javascript
 const functions = require('firebase-functions');
 const express = require('express');
 const engines = require('consolidate');
-const nodemailer = require('nodemailer');
+const nodemailer = require('nodema iler');
 const handlebars = require("handlebars");
 var validator = require('validator');
 ```
@@ -92,8 +96,8 @@ app.engine('hbs', engines.handlebars);
 app.set('views','./views');
 app.set('view engine', 'hbs');
 
-app.get("/",(req,res) => {
-    res.render("main.hbs");
+app.get("/",(req,res) => {   // GET route
+    res.render("main.hbs");  // Rendering the file
 });
 
 exports.app = functions.https.onRequest(app);
@@ -159,3 +163,50 @@ In the below code, we pass value of ```error``` variable to ```err``` variable. 
     res.render("main.hbs", {err: error});
 ```
 
+# HTML Contact Form
+
+The code is in ```main.hbs``` file present in ```functions/views``` folder. 
+We used ```POST``` method to send the data to ```/contact``` route. We will send:
+  1. Email Address of Sender
+  2. Email Address of Receiver
+  3. Subject
+  4. Message
+
+Then *Submit Button* will submit the data to ```/contact```.
+
+```HTML
+<form method="POST" action="/contact">
+  <label>Enter your mail ID:</label>
+<input type="email" required name="email_sender" />  
+  <label>Enter receiver mail ID:</label>
+<input type="email" required name="email_receiver" />  
+  <label>Subject</label>
+<input type="text" required name="subject" />  
+  <label>Enter Message:</label>
+<input type="text" required name="message" /> 
+    <button type="submit">Submit</button>
+</form>
+```
+
+# Show Error
+Error rendering will be done in ```main.hbs``` file present in ```functions/views``` folder. We will place our code below the HTML form. The ```err``` will be passed in webpage when we will render ```main.hbs``` in ```index.js``` file. We use **double curly braces** to render ```err``` in webpage **only** under the ```if``` condition.
+
+```handlebars
+{{# if err }}
+<h3>{{err}}</h3>
+{{/if}}
+```
+
+
+
+
+
+
+  
+
+
+
+
+
+
+ 
