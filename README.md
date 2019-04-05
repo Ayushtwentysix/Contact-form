@@ -7,8 +7,9 @@ This quickstart demonstrates the functioning of **Firebase SDK for Cloud Functio
 2. [Configuration](#Configuration)
 3. [Functions Code](#Functions-Code)
 4. [Usage instructions](#Usage-instructions)
-i. [Writing Dependencies](#Writing-Dependencies)
-ii. [First Firebase Function](#First-Firebase-Function)
+     * [Writing Dependencies](#Writing-Dependencies)
+     * [First Firebase Function](#First-Firebase-Function)
+     * [Second Firebase Function](#Second-Firebase-Function)
 
 # Introduction 
 We'll use the function that send emails using **[Nodemailer](https://www.npmjs.com/package/nodemailer)** dependency (a node based Email client with comprehensive EMail server setup). There are four input boxes:
