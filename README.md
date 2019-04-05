@@ -7,6 +7,8 @@ This quickstart demonstrates the functioning of **Firebase SDK for Cloud Functio
 2. [Configuration](#Configuration)
 3. [Functions Code](#Functions-Code)
 4. [Usage instructions](#Usage-instructions)
+i. [Writing Dependencies](#Writing-Dependencies)
+ii. [First Firebase Function](#First-Firebase-Function)
 
 # Introduction 
 We'll use the function that send emails using **[Nodemailer](https://www.npmjs.com/package/nodemailer)** dependency (a node based Email client with comprehensive EMail server setup). There are four input boxes:
@@ -62,3 +64,83 @@ The dependencies are listed in ```functions/package.json```. Please make sure th
 **Go for the latest version of dependencies !**
 
 # Usage instructions
+ Follow the below written instructions.
+ 
+# Writing Dependencies
+
+```javascript
+const functions = require('firebase-functions');
+const express = require('express');
+const engines = require('consolidate');
+const nodemailer = require('nodemailer');
+const handlebars = require("handlebars");
+var validator = require('validator');
+```
+# First Firebase Function
+
+```javascript
+const app = express();
+app.engine('hbs', engines.handlebars);
+app.set('views','./views');
+app.set('view engine', 'hbs');
+
+app.get("/",(req,res) => {
+    res.render("main.hbs");
+});
+
+exports.app = functions.https.onRequest(app);
+```
+
+# Second Firebase Function
+
+Since this code is bit large, we will break it into chunks.
+1. Creates an Express application.
+2. Choose engine as hbs.
+3. Set ```functions/views``` folder as views.
+4. Set hbs as engine.
+
+*see the below code.*
+```javascript
+const app2 = express();
+app2.engine('hbs', engines.handlebars);
+app2.set('views','./views');
+app2.set('view engine', 'hbs');
+```
+5. Create a POST route.
+```javascript
+app2.post("/contact",(req,res) => {
+        //We WILL WRITE CODE HERE
+});
+```
+6. Trigger the function ```app2``` with an HTTP request.
+```javascript
+exports.app2 = functions.https.onRequest(app2);
+```
+
+Now the basic code for ```app2``` firebase function looks like this:
+```javascript
+const app2 = express();
+app2.engine('hbs', engines.handlebars);
+app2.set('views','./views');
+app2.set('view engine', 'hbs');
+
+app2.post("/contact",(req,res) => {
+        //We WILL WRITE EMAIL SENDING CODE HERE
+});
+
+exports.app2 = functions.https.onRequest(app2);
+```
+7. Now we will validate both the emails. If they are not valid, we will generate an error and render it in our webpage.
+
+```javascript
+app2.post("/contact",(req,res) => {
+        if(validator.isEmail(req.body.email_sender) && validator.isEmail(req.body.email_receiver)){
+            // NODEMAILER CODE HERE
+        }
+        else {
+    const err = "Email input is not valid";
+    res.render("main.hbs", {err: err});
+}
+});
+```
+
