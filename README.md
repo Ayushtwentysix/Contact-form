@@ -79,6 +79,13 @@ var validator = require('validator');
 ```
 # First Firebase Function
 
+1. Create an Express application.
+2. Choose engine as hbs.
+3. Set ```functions/views``` folder as views.
+4. Set hbs as engine.
+5. Create a GET route and render ```main.hbs``` file present in ```functions/views``` folder
+6. Trigger the function ```app``` with an HTTP request.
+
 ```javascript
 const app = express();
 app.engine('hbs', engines.handlebars);
@@ -131,7 +138,7 @@ app2.post("/contact",(req,res) => {
 
 exports.app2 = functions.https.onRequest(app2);
 ```
-7. Now we will validate both the emails. If they are not valid, we will generate an error and render it in our webpage.
+7. Now we will validate both the emails. If they are not valid, we will generate an error and render it in our webpage. The inputs are ```req.body.email_sender``` & ```req.body.email_receiver```. The ```validator``` validates the email using ```.isEmail```.
 
 ```javascript
 app2.post("/contact",(req,res) => {
@@ -139,9 +146,16 @@ app2.post("/contact",(req,res) => {
             // NODEMAILER CODE HERE
         }
         else {
-    const err = "Email input is not valid";
+    const err = "Email input is not valid"; // the error
     res.render("main.hbs", {err: err});
 }
 });
+```
+
+In the below code, we pass value of ```error``` variable to ```err``` variable. Now ```err``` variable will be passed as a parameter to the ```render```.
+
+```javascript
+ const error = "Email input is not valid"; // the error 
+    res.render("main.hbs", {err: error});
 ```
 
