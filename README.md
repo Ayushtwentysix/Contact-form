@@ -2,7 +2,7 @@
 
 This quickstart demonstrates the functioning of **Firebase SDK for Cloud Functions** with an HTTPS trigger *for sending the emails*.
 
-# Table of contents
+## Table of contents
 1. [Introduction](#Introduction)
 2. [Configuration](#Configuration)
 3. [Functions Code](#Functions-Code)
@@ -11,10 +11,11 @@ This quickstart demonstrates the functioning of **Firebase SDK for Cloud Functio
      * [First Firebase Function](#First-Firebase-Function)
      * [Second Firebase Function](#Second-Firebase-Function)
      * [HTML Contact Form](#HTML-Contact-Form)
-     * [Show Error](#Show-Error)
+     * [Show Error](#Showr-Error)
      * [Deploy and Test](#Deploy-and-Test)
+5. [Report Bugs](#Report-Bugs)
 
-# Introduction 
+## Introduction 
 We'll use the function that send emails using **[Nodemailer](https://www.npmjs.com/package/nodemailer)** dependency (a node based Email client with comprehensive EMail server setup). There are four input boxes:
 - Sender email address **(required)**
 - Receiver mail address **(required)**
@@ -25,7 +26,7 @@ After we click on submit, then both the mail address are validate first. If any 
 
 ![error](https://res.cloudinary.com/dzdj5vlz4/image/upload/v1554367826/error_contact.png)
 
-#  Configuration
+##  Configuration
 
 First install [Node.js](https://nodejs.org/en/download/) for your environment.
 Then run the following commands to make directory & initialize package.json .
@@ -49,7 +50,7 @@ $ npm i --save express consolidate handlebars nodemailer validator
 
 **Watch the official video: [Node.js apps on Firebase Hosting Crash Course](https://youtu.be/LOeioOKUKI8)**
 
-# Functions Code
+## Functions Code
 See file ```functions/index.js``` for the Functions trigger and the email sending code.
 Sending emails is performed using nodemailer. For simplicity, in this sample we're showing how to send email through SMTP using a Gmail account.
 
@@ -70,7 +71,7 @@ The dependencies are listed in ```functions/package.json```. Please make sure th
 # Usage instructions
  Follow the below written instructions.
  
-# Writing Dependencies
+## Writing Dependencies
 
 Add below dependencies in ```functions/index.js``` file. 
 
@@ -80,9 +81,9 @@ const express = require('express');
 const engines = require('consolidate');
 const nodemailer = require('nodema iler');
 const handlebars = require("handlebars");
-var validator = require('validator');
+const validator = require('validator');
 ```
-# First Firebase Function
+## First Firebase Function
 
 1. Create an Express application.
 2. Choose engine as hbs.
@@ -104,7 +105,7 @@ app.get("/",(req,res) => {   // GET route
 exports.app = functions.https.onRequest(app);
 ```
 
-# Second Firebase Function
+## Second Firebase Function
 
 Since this code is bit large, we will break it into chunks.
 1. Creates an Express application.
@@ -163,7 +164,7 @@ In the below code, we pass value of ```error``` variable to ```err``` variable. 
     res.render("main.hbs", {err: error});
 ```
 
-# HTML Contact Form
+## HTML Contact Form
 
 The code is in ```main.hbs``` file present in ```functions/views``` folder. 
 We used ```POST``` method to send the data to ```/contact``` route. We will send:
@@ -188,7 +189,7 @@ Then *Submit Button* will submit the data to ```/contact```.
 </form>
 ```
 
-# Show Error
+## Show Error
 Error rendering will be done in ```main.hbs``` file present in ```functions/views``` folder. **We will place our code below the HTML form**. The ```err``` will be passed in webpage when we will render ```main.hbs``` in ```index.js``` file. We use **double curly braces** to render ```err``` in webpage **only** under the ```if``` condition.
 
 ```handlebars
@@ -197,7 +198,7 @@ Error rendering will be done in ```main.hbs``` file present in ```functions/view
 {{/if}}
 ```
 
-# Deploy and Test
+## Deploy and Test
 
 Now we will deploy both functions to firebase. Run command:
 ```sh
@@ -205,7 +206,8 @@ $ firebase deploy
 ```
 This will create two functions which can be seen in firebase console. At the end you will get a link of webpage (hosted on firebase). Open that page and enter the email address of sender, email address of sender, Subject & Message. Then press Submit. 
 
-
+## Report Bugs
+Follow steps mentioned in ```ISSUE_TEMPLATE.md``` to report bugs.
 
 
 
