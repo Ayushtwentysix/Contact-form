@@ -12,7 +12,9 @@ This quickstart demonstrates the functioning of **Firebase SDK for Cloud Functio
      * [Second Firebase Function](#Second-Firebase-Function)
      * [HTML Contact Form](#HTML-Contact-Form)
      * [Show Error](#Showr-Error)
-     * [Deploy and Test](#Deploy-and-Test)
+     * [Rewrites](#Rewrites)
+     * [Deploy](#Deploy)
+     * [Set Environment Variables](#Set-Environment-Variables)
 5. [Report Bugs](#Report-Bugs)
 
 ## Introduction 
@@ -197,25 +199,57 @@ Error rendering will be done in ```main.hbs``` file present in ```functions/view
 <h3>{{err}}</h3>
 {{/if}}
 ```
+#  Rewrites
+Here we will connect the firebase functions with GET/POST method by writing app name & source in rewrites object. If app name is not properly connected with source, you will get a ```Page Not Found``` error. **Do not modify JSON objects other than Rewrites**. 
+See file ```firebase.json``` for full JSON object.
+```javascript
+"rewrites": [
+      {
+        "source": "/",
+        "function": "app" 
+      },
+      {
+        "source": "/contact",
+        "function": "app2"
+      }]
+```
 
-## Deploy and Test
+# Deploy and Test
 
-To be able to send emails with your Gmail account: **enable access to [Less Secure Apps](https://myaccount.google.com/lesssecureapps)**.
+Now we will deploy both functions to firebase. Run the command:
+```sh
+$ firebase deploy
+```
+
+This will create two functions which can be seen under Functions section in firebase console. At the end you will get a link of webpage in Linux terminal/ Command Prompt. As this is hosted on firebase, you can also get link by visiting the Hosting section in Firebase Console. Go to next section to set environment variables so as to send mails.
+
+# Set Environment Variables 
+
+Now we will go for Auth object under createTransport in Nodemailer.
+
+```javascript
+ var transporter = nodemailer.createTransport({
+ service: 'gmail',
+ secure: true,
+ auth: {
+       user: process.env.EMAIL,
+        pass: process.env.PASSWORD 
+    }
+});
+```
+Here ```process.env.EMAIL``` and ```process.env.PASSWORD``` are variables defined in Google environment.
+
+To be able to send emails with your Gmail account: **first enable access to [Less Secure Apps](https://myaccount.google.com/lesssecureapps)**.
 Set the ```EMAIL``` and ```PASSWORD``` Google Cloud environment variables to match the email and password of the Gmail account used to send emails. To set the variables follow these steps:
 1. Go to firebase console & select the project where you deployed the code.
 2. Then click on functions link present in sidebar.
 3. In the dashboard tab, hover on ```app2``` function. On right hand side, click on **three vertical dots** and then on **Detailed usage stats** link. This will open the ```app2``` function in Google Cloud Platform (GCP).
 ![firebase dashboard](https://res.cloudinary.com/dzdj5vlz4/image/upload/v1554479053/dashboard_firebase.png)
-4. Click on **edit** in GCP dashboard.
+4. Click on **edit** in GCP dashboard. *The green tick against the app2 shows that the function is deployed properly*.
  ![GCP dashboard](https://res.cloudinary.com/dzdj5vlz4/image/upload/v1554479409/GCP_console.png)
 5. Click on **more** option and head over to Environment variables section. Now replace the *values* of **EMAIL** & **PASSWORD** box with the email and password of the Gmail account used to send emails.
 ![environment variables](https://res.cloudinary.com/dzdj5vlz4/image/upload/v1554479959/environment_variables.png) 
-
-Now we will deploy both functions to firebase. Run command:
-```sh
-$ firebase deploy
-```
-This will create two functions which can be seen in firebase console. At the end you will get a link of webpage (hosted on firebase). Open that page and enter the email address of sender, email address of sender, Subject & Message. Then press Submit. 
+Refersh the page and enter the email address of sender, email address of sender, Subject & Message. Then press Submit. 
 
 ## Report Bugs
 Follow steps mentioned in ```ISSUE_TEMPLATE.md``` to report bugs.
