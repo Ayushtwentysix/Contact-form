@@ -53,7 +53,8 @@ $ firebase init functions
 $ cd functions
 $ npm i --save express consolidate handlebars nodemailer validator
 ```
-Then delete the ```index.html``` file present in public folder. *Pubic folder contains all the static files like HTML files, robots.txt , xml files etc..*.
+Then delete the ```index.html``` file present in public folder. 
+>Pubic folder contains all the static files like HTML files, robots.txt , xml files etc... & functions folder contain all the dynamic content.
 
 **Watch the official video: [Node.js apps on Firebase Hosting Crash Course](https://youtu.be/LOeioOKUKI8)**
 
