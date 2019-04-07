@@ -12,7 +12,7 @@ This quickstart demonstrates using the **Firebase SDK for Cloud Functions** with
      * [Second Firebase Function](#Second-Firebase-Function)
      * [Nodemailer Code](#Nodemailer-Code)
      * [HTML Contact Form](#HTML-Contact-Form)
-     * [Show Error](#Showr-Error)
+     * [Show Error](#Show-Error)
      * [Rewrites](#Rewrites)
      * [Deploy](#Deploy)
      * [Set Environment Variables](#Set-Environment-Variables)
@@ -323,6 +323,7 @@ Set the ```EMAIL``` and ```PASSWORD``` Google Cloud environment variables to mat
 5. Click on **more** option and head over to Environment variables section. Now replace the *values* of **EMAIL** & **PASSWORD** box with the email and password of the Gmail account used to send emails.
 ![environment variables](https://res.cloudinary.com/dzdj5vlz4/image/upload/v1554479959/environment_variables.png) 
 Refersh the page and enter the email address of sender, email address of sender, Subject & Message. Then press Submit. 
+ > If after the refresh, email is not send, deploy the functions again by using the command: ```firebase deploy```.
 
 ## Report Bugs
 Follow steps mentioned in ```ISSUE_TEMPLATE.md``` to report bugs.
