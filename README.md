@@ -1,6 +1,6 @@
-# Firebase SDK for Cloud Functions - HTTPS function for Email Trigger
+# Firebase SDK for Cloud Functions - HTTPS function with Email Trigger
 
-This quickstart demonstrates the functioning of **Firebase SDK for Cloud Functions** with an HTTPS trigger *for sending the emails*.
+This quickstart demonstrates using the **Firebase SDK for Cloud Functions** with an HTTPS trigger *for sending the emails*.
 
 ## Table of contents
 1. [Introduction](#Introduction)
@@ -10,6 +10,7 @@ This quickstart demonstrates the functioning of **Firebase SDK for Cloud Functio
      * [Dependencies](#Dependencies)
      * [First Firebase Function](#First-Firebase-Function)
      * [Second Firebase Function](#Second-Firebase-Function)
+     * [Nodemailer Code](#Nodemailer-Code)
      * [HTML Contact Form](#HTML-Contact-Form)
      * [Show Error](#Showr-Error)
      * [Rewrites](#Rewrites)
@@ -18,19 +19,22 @@ This quickstart demonstrates the functioning of **Firebase SDK for Cloud Functio
 5. [Report Bugs](#Report-Bugs)
 
 ## Introduction 
-We'll use the function that send emails using **[Nodemailer](https://www.npmjs.com/package/nodemailer)** dependency (a node based Email client with comprehensive EMail server setup). There are four input boxes:
+We will create two files here - ```index.js``` and ```main.hbs```. The index.js is present in functions directory and it contain server code. The main.hbs is present in views directory which is inside functions directory and it has HTML contact form.
+
+We'll will use **[Nodemailer](https://www.npmjs.com/package/nodemailer)** dependency to send mails. There are four input boxes in HTML form:
 - Sender email address **(required)**
 - Receiver mail address **(required)**
 - Subject
 - Message
 
-After we click on submit, then both the mail address are validate first. If any one of them is not a valid email address, then an error is generated (shown below in image).
-
+After we click on submit, both the mail address go through validation process. If any one of them is not a valid email address, then an error is generated (shown below in image).
 ![error](https://res.cloudinary.com/dzdj5vlz4/image/upload/v1554367826/error_contact.png)
 
-##  Configuration
+## Configuration
 
-First install [Node.js](https://nodejs.org/en/download/) for your environment.
+First install [Node.js](https://nodejs.org/en/download/) for your environment. 
+**Nodemailer requires Node.js v6.0.0 or newer.**
+
 Then run the following commands to make directory & initialize package.json .
 ```sh
 $ mkdir contact_form
@@ -49,14 +53,15 @@ $ firebase init functions
 $ cd functions
 $ npm i --save express consolidate handlebars nodemailer validator
 ```
+Then delete the ```index.html``` file present in public folder. *Pubic folder contains all the static files like HTML files, robots.txt , xml files etc..*.
 
 **Watch the official video: [Node.js apps on Firebase Hosting Crash Course](https://youtu.be/LOeioOKUKI8)**
 
 ## Functions Code
-See file ```functions/index.js``` for the Functions trigger and the email sending code.
+See file ```functions/index.js``` for firebase functions and the email sending code ( under *app2* function).
 Sending emails is performed using nodemailer. For simplicity, in this sample we're showing how to send email through SMTP using a Gmail account.
 
-The dependencies are listed in ```functions/package.json```. Please make sure that ```firebase-admin``` dependency and ```firebase-functions``` dependency are present when deploying the code to firebase.
+The dependencies are listed in ```functions/package.json```. Please make sure that ```firebase-admin``` dependency and ```firebase-functions``` dependency are present when we deploy the code to firebase. We have already installed the dependencies in [Configuration](#Configuration) section.
 ```javascript
 "dependencies": {
     "consolidate": "^0.15.1",
@@ -70,38 +75,53 @@ The dependencies are listed in ```functions/package.json```. Please make sure th
 ```
 **Go for the latest version of dependencies !**
 
-# Usage instructions
- Follow the below written instructions.
+## Usage instructions
+ Follow the instructions to create functions, create HTML contact form and deploy to firebase.
  
-## Writing Dependencies
-
-Add below dependencies in ```functions/index.js``` file. 
-
+## Dependencies
+Include below dependencies in ```functions/index.js``` file. 
 ```javascript
-var functions = require('firebase-functions');
-var express = require('express');
-var engines = require('consolidate');
-var nodemailer = require('nodema iler');
-var handlebars = require("handlebars");
-var validator = require('validator');
+const functions = require('firebase-functions');//https://www.npmjs.com/package/firebase-functions
+const express = require('express');  // https://www.npmjs.com/package/express
+const engines = require('consolidate'); // https://www.npmjs.com/package/consolidate 
+const nodemailer = require('nodemailer'); //https://www.npmjs.com/package/nodemailer
+const handlebars = require("handlebars"); //https://www.npmjs.com/package/handlebars
+var validator = require('validator'); //https://www.npmjs.com/package/validator
 ```
+
 ## First Firebase Function
 
 1. Create an Express application.
 2. Choose engine as hbs.
-3. Set ```functions/views``` folder as views.
+3. Set ```views``` folder as views.
 4. Set hbs as engine.
+```javascript
+const app = express();
+app.engine('hbs', engines.handlebars);
+app.set('views','./views');
+app.set('view engine', 'hbs');
+```
 5. Create a GET method and render ```main.hbs``` file present in ```functions/views``` folder
-6. Trigger the function ```app``` with an HTTP request.
 
+```javascript
+app.get("/",(req,res) => {      // GET method
+    res.render("main.hbs");    // Rendering the file
+});
+```
+6. Trigger the function ```app``` with an HTTP/HTTPS request.
+
+```javascript
+exports.app = functions.https.onRequest(app);
+```
+7. The full code of ```app``` function.
 ```javascript
 const app = express();
 app.engine('hbs', engines.handlebars);
 app.set('views','./views');
 app.set('view engine', 'hbs');
 
-app.get("/",(req,res) => {   // GET route
-    res.render("main.hbs");  // Rendering the file
+app.get("/",(req,res) => {      // GET method
+    res.render("main.hbs");    // Rendering the file
 });
 
 exports.app = functions.https.onRequest(app);
@@ -109,8 +129,7 @@ exports.app = functions.https.onRequest(app);
 
 ## Second Firebase Function
 
-Since this code is bit large, we will break it into chunks.
-1. Creates an Express application.
+1. Create an Express application.
 2. Choose engine as hbs.
 3. Set ```functions/views``` folder as views.
 4. Set hbs as engine.
@@ -121,10 +140,10 @@ app2.engine('hbs', engines.handlebars);
 app2.set('views','./views');
 app2.set('view engine', 'hbs');
 ```
-5. Create a POST Method.
+5. Create a POST method.
 ```javascript
-app2.post("/contact",(req,res) => {
-        //We WILL WRITE CODE HERE
+app2.post("/contact",(req,res) => {    // POST method
+        //We WILL WRITE EMAIL SENDING CODE HERE
 });
 ```
 6. Trigger the function ```app2``` with an HTTP request.
@@ -132,7 +151,25 @@ app2.post("/contact",(req,res) => {
 exports.app2 = functions.https.onRequest(app2);
 ```
 
-Now the basic code for ```app2``` firebase function looks like this:
+
+7. Now we will validate both the emails using ```validator``` dependency. If any one of them is not valid, we will generate an error and render it in our webpage. The inputs are ```req.body.email_sender``` & ```req.body.email_receiver```. The ```validator``` validates the email using ```.isEmail```.
+
+```javascript
+ if(validator.isEmail(req.body.email_sender) && validator.isEmail(req.body.email_receiver)){
+            // NODEMAILER CODE HERE
+        }
+        else {
+            // GENERATE ERROR
+}
+```
+8. We will first code else condition. In the below code, we pass value of ```error``` variable to ```err``` variable. Now ```err``` variable will be passed as a parameter to the ```render```..
+
+```javascript
+ const error = "Email input is not valid"; // the error 
+    res.render("main.hbs", {err: error});
+```
+
+9. The basic code for ```app2``` firebase function looks like this:
 ```javascript
 const app2 = express();
 app2.engine('hbs', engines.handlebars);
@@ -140,31 +177,60 @@ app2.set('views','./views');
 app2.set('view engine', 'hbs');
 
 app2.post("/contact",(req,res) => {
-        //We WILL WRITE EMAIL SENDING CODE HERE
-});
-
-exports.app2 = functions.https.onRequest(app2);
-```
-7. Now we will validate both the emails. If they are not valid, we will generate an error and render it in our webpage. The inputs are ```req.body.email_sender``` & ```req.body.email_receiver```. The ```validator``` validates the email using ```.isEmail```.
-
-```javascript
-app2.post("/contact",(req,res) => {
         if(validator.isEmail(req.body.email_sender) && validator.isEmail(req.body.email_receiver)){
             // NODEMAILER CODE HERE
         }
         else {
-    const err = "Email input is not valid"; // the error
-    res.render("main.hbs", {err: err});
+    const error = "Email input is not valid"; // the error 
+    res.render("main.hbs", {err: error});
 }
+});
+
+exports.app2 = functions.https.onRequest(app2);
+```
+> It is similar to code written for ```app``` function except that we are using a POST method instead of a GET method.
+
+## Nodemailer Code
+
+Nodemailer is a module for Node.js applications to allow email sending. The code will come inside the ```if condition``` of POST method. Refer to [Nodemailer docs](https://nodemailer.com/about/) for more info.
+
+It has three parts: createTransport, mailOptions & sendMail.
+
+The ```createTransport``` takes a object which has service and auth field.
+```javascript
+     var transporter = nodemailer.createTransport({
+ service: 'gmail',
+ secure: true,
+ auth: {
+       user: process.env.EMAIL,
+        pass: process.env.PASSWORD 
+    }
 });
 ```
 
-In the below code, we pass value of ```error``` variable to ```err``` variable. Now ```err``` variable will be passed as a parameter to the ```render```.
-
+The ```mailOptions``` takes the information of sender and receiver.
 ```javascript
- const error = "Email input is not valid"; // the error 
-    res.render("main.hbs", {err: error});
+       var mailOptions = {
+  from: req.body.email_sender, // sender address
+  to: req.body.email_receiver, // list of receivers
+  subject: req.body.subject, // Subject line
+html: req.body.message
+};
 ```
+
+```sendMail``` sends the mail by taking mailOptions as input. Either we receive an error or a result. In both case we redirect to ```/``` route.
+```javascript
+     transporter.sendMail(mailOptions, function (err, info) {
+        if(err){
+         console.log(err);
+         res.redirect('/');
+        }
+         else
+          console.log(info);
+          res.redirect('/');
+});
+```
+ To see code, go to ```functions/index.js``` file.
 
 ## HTML Contact Form
 
@@ -192,15 +258,18 @@ Then *Submit Button* will submit the data to ```/contact```.
 ```
 
 ## Show Error
-Error rendering will be done in ```main.hbs``` file present in ```functions/views``` folder. **We will place our code below the HTML form**. The ```err``` will be passed in webpage when we will render ```main.hbs``` in ```index.js``` file. We use **double curly braces** to render ```err``` in webpage **only** under the ```if``` condition.
+Error rendering will be done in ```main.hbs``` file present in ```functions/views``` folder. We will place our code below the HTML form. The ```err``` will be passed in webpage when we will render ```main.hbs``` in ```app2``` firebase function. We use **double curly braces** to show ```err``` in webpage **only** under the ```if  condition```. 
+ >If and only if both the email addresses are valid, then code under ```if condition``` will not be displayed.
 
 ```handlebars
 {{# if err }}
 <h3>{{err}}</h3>
 {{/if}}
 ```
-#  Rewrites
-Here we will connect the firebase functions with GET/POST method by writing app name & source in rewrites object. If app name is not properly connected with source, you will get a ```Page Not Found``` error. **Do not modify JSON objects other than Rewrites**. 
+
+##  Rewrites
+Here we will connect the firebase functions with GET/POST method by writing function name & source in rewrites object. If function name is not properly connected with source, you will get a ```Page Not Found``` error. 
+**Do not modify JSON objects other than Rewrites**. 
 See file ```firebase.json``` for full JSON object.
 ```javascript
 "rewrites": [
@@ -214,18 +283,21 @@ See file ```firebase.json``` for full JSON object.
       }]
 ```
 
-# Deploy and Test
+## Deploy
 
 Now we will deploy both functions to firebase. Run the command:
 ```sh
 $ firebase deploy
 ```
 
-This will create two functions which can be seen under Functions section in firebase console. At the end you will get a link of webpage in Linux terminal/ Command Prompt. As this is hosted on firebase, you can also get link by visiting the Hosting section in Firebase Console. Go to next section to set environment variables so as to send mails.
+This will create two functions which can be seen under Functions section in firebase console. At the end, you will get a link of webpage in Linux terminal/ Command Prompt. 
+> As our webpage is hosted on firebase, we can also get link by visiting the Hosting section in Firebase Console. 
 
-# Set Environment Variables 
+Now, just one step left before we send mails. Go to [set environment variables](#Set-Environment-Variables) section.
 
-Now we will go for Auth object under createTransport in Nodemailer.
+## Set Environment Variables 
+
+Now we will go for **Auth** object under createTransport in Nodemailer.
 
 ```javascript
  var transporter = nodemailer.createTransport({
@@ -237,7 +309,7 @@ Now we will go for Auth object under createTransport in Nodemailer.
     }
 });
 ```
-Here ```process.env.EMAIL``` and ```process.env.PASSWORD``` are variables defined in Google environment.
+Here ```process.env.EMAIL``` and ```process.env.PASSWORD``` are variables defined in environment.
 
 To be able to send emails with your Gmail account: **first enable access to [Less Secure Apps](https://myaccount.google.com/lesssecureapps)**.
 Set the ```EMAIL``` and ```PASSWORD``` Google Cloud environment variables to match the email and password of the Gmail account used to send emails. To set the variables follow these steps:
@@ -257,11 +329,8 @@ Follow steps mentioned in ```ISSUE_TEMPLATE.md``` to report bugs.
 
 
 
-  
 
 
 
 
 
-
- 
