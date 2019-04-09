@@ -17,6 +17,7 @@ This quickstart demonstrates using the **Firebase SDK for Cloud Functions** with
      * [Deploy](#Deploy)
      * [Set Environment Variables](#Set-Environment-Variables)
 5. [Report Bugs](#Report-Bugs)
+6. [Contributing](#Contributing)
 
 ## Introduction 
 We will create two files here - ```index.js``` and ```main.hbs```. The index.js is present in functions directory and it contain server code. The main.hbs is present in views directory which is inside functions directory and it has HTML contact form.
@@ -28,7 +29,7 @@ We'll will use **[Nodemailer](https://www.npmjs.com/package/nodemailer)** depend
 - Message
 
 After we click on submit, both the mail address go through validation process. If any one of them is not a valid email address, then an error is generated (shown below in image).
-![error](https://res.cloudinary.com/dzdj5vlz4/image/upload/v1554367826/error_contact.png)
+![error](https://res.cloudinary.com/dzdj5vlz4/image/upload/v1554842230/contact-form.png)
 
 ## Configuration
 
@@ -328,7 +329,8 @@ Refersh the page and enter the email address of sender, email address of sender,
 ## Report Bugs
 Follow steps mentioned in ```ISSUE_TEMPLATE.md``` to report bugs.
 
-
+## Contributing
+We'd love that you contribute to the project. Before doing so please read our [Contributor guide](https://github.com/firebase/functions-samples/blob/master/CONTRIBUTING.md).
 
 
 
