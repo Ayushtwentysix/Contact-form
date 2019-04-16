@@ -71,6 +71,8 @@ Follow these instructions:
 
 **Watch the official video: [Node.js apps on Firebase Hosting Crash Course](https://youtu.be/LOeioOKUKI8)**
 
+Now jump to [Deploy](#Deploy) section for deployment process.
+
 ## Functions Code
 See file ```functions/index.js``` for firebase functions and the email sending code ( under *app2* function).
 Sending emails is performed using nodemailer. For simplicity, in this sample we're showing how to send email through SMTP using a Gmail account.
