@@ -36,25 +36,37 @@ After we click on submit, both the mail address go through validation process. I
 First install [Node.js](https://nodejs.org/en/download/) for your environment. 
 **Nodemailer requires Node.js v6.0.0 or newer.**
 
-Then run the following commands to make directory & initialize package.json .
+Then run the following commands:
 ```sh
-$ mkdir contact_form
-$ cd contact_form
-$ npm init -y
+$ git clone https://github.com/Ayushtwentysix/Contact-form.git
+$ cd Contact-form
 ```
 
 Now we will initialize [firebase](https://firebase.google.com/):- *hosting* & *function*.
 ```sh
 $ npm i -g firebase-tools
+$ firebase login
 $ firebase init hosting
 ```
- Select your firebase project which you created in [firebase console](https://firebase.google.com/). Then initialize functions & install required dependencies .
+>If you are using cloud IDE, use ```firebase login --no-localhost``` command.
+
+### Hosting Setup
+Select your firebase project which you created in [firebase console](https://firebase.google.com/). Then follow the instruction given in below image.
+![hosting](https://res.cloudinary.com/dzdj5vlz4/image/upload/v1555445605/hosting_firebase.png)
+
+Follow these two instructions.
+ 1. **Now ```firebase.json``` file has been reset. Go to [Rewrites](#Rewrites) section and copy the same Rewrites in modified firebase.json file.**
+ 2. **Delete the ```public/index.html``` file.** 
+
+### Functions Setup
+  Then initialize functions & install required dependencies .
 ```sh
 $ firebase init functions
-$ cd functions
-$ npm i --save express consolidate handlebars nodemailer validator
 ```
-Then delete the ```index.html``` file present in public folder. 
+Follow these instructions: 
+![functions setup](https://res.cloudinary.com/dzdj5vlz4/image/upload/v1555446307/functions_setup.png)
+`
+
 >Pubic folder contains all the static files like HTML files, robots.txt , xml files etc... & functions folder contain all the dynamic content.
 
 **Watch the official video: [Node.js apps on Firebase Hosting Crash Course](https://youtu.be/LOeioOKUKI8)**
