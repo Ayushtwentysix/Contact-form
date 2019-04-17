@@ -32,11 +32,6 @@ if(validator.isEmail(req.body.email_sender) && validator.isEmail(req.body.email_
         pass: process.env.PASSWORD 
     }
 });
-
-   
-
- 
- 
        var mailOptions = {
   from: req.body.email_sender, // sender address
   to: req.body.email_receiver, // list of receivers
@@ -53,14 +48,11 @@ html: req.body.message
           console.log(info);
           res.redirect('/');
 });   
-
 }
 else {
     var err = "Email input is not valid";
     res.render("main.hbs", {err: err});
 }
-
-
 });
 
 exports.app2 = functions.https.onRequest(app2);
