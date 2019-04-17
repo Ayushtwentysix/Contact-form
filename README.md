@@ -29,7 +29,7 @@ We'll will use **[Nodemailer](https://www.npmjs.com/package/nodemailer)** depend
 - Message
 
 After we click on submit, both the mail address go through validation process. If any one of them is not a valid email address, then an error is generated.
-![error](https://res.cloudinary.com/dzdj5vlz4/image/upload/v1554842230/contact-form.png)
+![error](https://res.cloudinary.com/dzdj5vlz4/image/upload/q_100/v1555513825/contact-form.png)
 
 ## Configuration
 
