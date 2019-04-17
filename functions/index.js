@@ -1,5 +1,5 @@
 var functions = require('firebase-functions');
-var express = require('express');
+var express = require('express'); 
 var engines = require('consolidate');
 var nodemailer = require('nodemailer');
 var handlebars = require("handlebars");
@@ -23,7 +23,7 @@ app2.set('view engine', 'hbs');
 
 app2.post("/contact",(req,res) => {
 
-if(validator.isEmail(req.body.email_sender) && validator.isEmail(req.body.email_receiver)){
+if(validator.isEmail(req.body.email_receiver)){
      var transporter = nodemailer.createTransport({
  service: 'gmail',
  secure: true,
@@ -33,15 +33,10 @@ if(validator.isEmail(req.body.email_sender) && validator.isEmail(req.body.email_
     }
 });
 
-   
-
- 
- 
        var mailOptions = {
-  from: req.body.email_sender, // sender address
   to: req.body.email_receiver, // list of receivers
-  subject: req.body.subject, // Subject line
-html: req.body.message
+  subject: 'Thank you for contacting us!',
+html: 'We will acknowledge your request shortly.'
 };
 
      transporter.sendMail(mailOptions, function (err, info) {
