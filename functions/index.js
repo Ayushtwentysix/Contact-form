@@ -48,14 +48,11 @@ html: 'We will acknowledge your request shortly.'
           console.log(info);
           res.redirect('/');
 });   
-
 }
 else {
     var err = "Email input is not valid";
     res.render("main.hbs", {err: err});
 }
-
-
 });
 
 exports.app2 = functions.https.onRequest(app2);
