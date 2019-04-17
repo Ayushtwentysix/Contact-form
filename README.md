@@ -50,7 +50,7 @@ $ firebase init hosting
 ```
 >If you are using cloud IDE, use ```firebase login --no-localhost``` command.
 
-### Hosting Setup
+#### Hosting Setup
 Select your firebase project which you created in [firebase console](https://firebase.google.com/). Then follow the instruction given in below image.
 ![hosting](https://res.cloudinary.com/dzdj5vlz4/image/upload/q_100/v1555514569/hosting_firebase.png)
 
@@ -58,7 +58,7 @@ Follow these two instructions.
  1. **Now ```firebase.json``` file has been reset. Go to [Rewrites](#Rewrites) section and copy the same Rewrites in modified firebase.json file.**
  2. **Delete the ```public/index.html``` file.** 
 
-### Functions Setup
+#### Functions Setup
   Then initialize functions & install required dependencies .
 ```sh
 $ firebase init functions
