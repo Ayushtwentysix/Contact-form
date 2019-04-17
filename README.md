@@ -52,7 +52,7 @@ $ firebase init hosting
 
 ### Hosting Setup
 Select your firebase project which you created in [firebase console](https://firebase.google.com/). Then follow the instruction given in below image.
-![hosting](https://res.cloudinary.com/dzdj5vlz4/image/upload/v1555445605/hosting_firebase.png)
+![hosting](https://res.cloudinary.com/dzdj5vlz4/image/upload/q_100/v1555514569/hosting_firebase.png)
 
 Follow these two instructions.
  1. **Now ```firebase.json``` file has been reset. Go to [Rewrites](#Rewrites) section and copy the same Rewrites in modified firebase.json file.**
@@ -64,7 +64,7 @@ Follow these two instructions.
 $ firebase init functions
 ```
 Follow these instructions: 
-![functions setup](https://res.cloudinary.com/dzdj5vlz4/image/upload/v1555446307/functions_setup.png)
+![functions setup](https://res.cloudinary.com/dzdj5vlz4/image/upload/q_100/v1555514909/functions_setup.png)
 `
 
 >Pubic folder contains all the static files like HTML files, robots.txt , xml files etc... & functions folder contain all the dynamic content.
